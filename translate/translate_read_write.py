@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 
 def translate(seq): 
@@ -33,27 +34,29 @@ def read_file(name):
 	try:
 	    with open(name, "r") as file:
 	    	seq = file.read()
-	except FileNotFoundError as fnf_error:
-		print(fnf_error,  end = '\n\n')
+	except IOError as fnf_error:
+		print(fnf_error)
+		print("\n")
 		return False
 
 	seq = seq.replace("\n", "")  
 	seq = seq.replace("\r", "")
 	seq = seq.replace(".", "")
-	print("\nmRna: " + seq, end = '\n\n')
+	print("\nmRna: " + seq)
+	print("\n")
 	print("Proteina: " + translate(seq))
 	return True
 
 def main():
 	if sys.version_info.major == 2:
-		name = raw_input("Digite o nome do arquivo com a sua extenção: ")
+		name = raw_input("Digite o nome do arquivo com a sua extenção (.txt): ")
 	elif sys.version_info.major == 3:
-		name = input("Digite o nome do arquivo com a sua extenção: ")
+		name = input("Digite o nome do arquivo com a sua extenção (.txt): ")
 
 	while read_file(name) == False:
 		if sys.version_info.major == 2:
-			name = raw_input("Digite o nome do arquivo com a sua extenção: ")
+			name = raw_input("Digite o nome do arquivo com a sua extenção (.txt): ")
 		elif sys.version_info.major == 3:
-			name = input("Digite o nome do arquivo com a sua extenção: ")
+			name = input("Digite o nome do arquivo com a sua extenção (.txt): ")
 
 main()
