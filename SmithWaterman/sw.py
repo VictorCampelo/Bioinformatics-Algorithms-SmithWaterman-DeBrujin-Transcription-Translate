@@ -12,9 +12,9 @@ def smithWaterman(s1,s2):
 
 	#preencher a matriz com zeros
 	matriz = []
-	for x in xrange(0,tam__s2+1):
+	for x in range(0,tam__s2+2,1):
 		tmp = []
-		for y in xrange(0,tam__s1+1):
+		for y in range(0,tam__s1+2,1):
 			tmp.append(0)
 		matriz.append(tmp[:])
 
@@ -25,9 +25,9 @@ def smithWaterman(s1,s2):
 	misMatch = -1
 	gap = -1
 	best = 0
-	for x in xrange(1,tam__s2):
+	for x in range(1,tam__s2+1,1):
 		tmp = []
-		for y in xrange(1,tam__s1):
+		for y in range(1,tam__s1+1,1):
 			values = []
 			#diagonal
 			if (s1[y-1] == s2[x-1]):
@@ -39,7 +39,7 @@ def smithWaterman(s1,s2):
 			#esqueda
 			values.append(matriz[x][y-1]+gap)
 			#max
-			t = (0, values[0], values[1], values[2])
+			t = [0, values[0], values[1], values[2]]
 			matriz[x][y] = max(t)
 			tmp.append(t)
 			if(matriz[x][y] >= best):
@@ -47,14 +47,41 @@ def smithWaterman(s1,s2):
 				l__Max = x-1
 				c__Max = y-1
 		backtrack.append(tmp[:])
-	print(backtrack)
-''''
-	for x in xrange(c__Max,0):
-		for y in xrange(l__Max, 0):
-			backtrack[x][y]
-'''
-
-
+	new__s1 = ""
+	new__s2 = ""
+	x = l__Max
+	y = c__Max
+	while (x >= 0 and y >= 0):
+		t = backtrack[x][y]
+		idx = t.index(max(backtrack[x][y]))
+		#print(idx)
+		print("x: "+str(x))
+		print("y: "+str(y))
+		#seta diagonal s1 = s2
+		if(idx == 1):
+			new__s1 += s1[y]
+			new__s2 += s2[x]
+			x = x-1
+			y = y-1
+		#seta topo
+		elif(idx == 2):
+			new__s1 += "_"
+			new__s2 += s2[x]
+			x = x-1
+		#seta esquerda
+		elif(idx == 3):
+			new__s1 += s1[y]
+			new__s2 += "_"
+			y = y-1
+		else:
+			break	
+	print(new__s1[::-1])
+	print(new__s2[::-1])
+	#write in file
+	f= open("out_sw.txt","w+")
+	f.write(new__s1)
+	f.write("\n")
+	f.write(new__s2)
 def read_file(name):
 	try:
 	    with open(name, "r") as file:
@@ -73,17 +100,17 @@ def read_file(name):
 
 def main():
 	seq = ["",""]
-	for x in xrange(1,2):
+	for x in range(0,2,1):
 		if sys.version_info.major == 2:
 			name = raw_input("Digite o nome do arquivo com a sua extenção (.txt): ")
 		elif sys.version_info.major == 3:
 			name = input("Digite o nome do arquivo com a sua extenção (.txt): ")
 		seq[x] = read_file(name)	
-		while seq[x-1] == "":
+		while seq[x] == "":
 			if sys.version_info.major == 2:
 				name = raw_input("Digite o nome do arquivo com a sua extenção (.txt): ")
 			elif sys.version_info.major == 3:
 				name = input("Digite o nome do arquivo com a sua extenção (.txt): ")
-			seq[x-1] = read_file(name)
+			seq[x] = read_file(name)
 	smithWaterman(seq[0], seq[1])
 main()
