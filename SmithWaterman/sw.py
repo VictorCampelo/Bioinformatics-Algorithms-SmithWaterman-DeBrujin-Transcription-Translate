@@ -79,9 +79,9 @@ def smithWaterman(s1,s2):
 	print(new__s2[::-1])
 	#write in file
 	f= open("out_sw.txt","w+")
-	f.write(new__s1)
+	f.write(new__s1[::-1])
 	f.write("\n")
-	f.write(new__s2)
+	f.write(new__s2[::-1])
 def read_file(name):
 	try:
 	    with open(name, "r") as file:
