@@ -17,10 +17,7 @@ def smithWaterman(s1,s2):
 		for y in xrange(0,tam__s1+1):
 			tmp.append(0)
 		matriz.append(tmp[:])
-	#matriz 0 0 0
-	#		0 0 0
-	#		0 0 0
-	#print(matriz)
+
 	backtrack = []
 	l__Max = 0
 	c__Max = 0
@@ -32,25 +29,32 @@ def smithWaterman(s1,s2):
 		tmp = []
 		for y in xrange(1,tam__s1):
 			values = []
-			
 			#diagonal
 			if (s1[y-1] == s2[x-1]):
-				values[0] = matriz[x-1][y-1]+match
+				values.append(matriz[x-1][y-1]+match)
 			else:
-				values[0] = matriz[x-1][y-1]+misMatch
+				values.append(matriz[x-1][y-1]+misMatch)
 			#topo
-			values[1] = matriz[x-1][y]+gap
+			values.append(matriz[x-1][y]+gap)
 			#esqueda
-			values[2] = matriz[x][y-1]+gap
+			values.append(matriz[x][y-1]+gap)
 			#max
 			t = (0, values[0], values[1], values[2])
 			matriz[x][y] = max(t)
 			tmp.append(t)
 			if(matriz[x][y] >= best):
 				best = matriz[x][y]
-				l__Max = x+1
-				c__Max = y+1
+				l__Max = x-1
+				c__Max = y-1
 		backtrack.append(tmp[:])
+	print(backtrack)
+''''
+	for x in xrange(c__Max,0):
+		for y in xrange(l__Max, 0):
+			backtrack[x][y]
+'''
+
+
 def read_file(name):
 	try:
 	    with open(name, "r") as file:
