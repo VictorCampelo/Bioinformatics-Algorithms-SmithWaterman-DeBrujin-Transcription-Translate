@@ -21,10 +21,11 @@ def smithWaterman(s1,s2):
 	backtrack = []
 	l__Max = 0
 	c__Max = 0
-	match = 1
+	match = 2
 	misMatch = -1
 	gap = -1
 	best = 0
+	#1 = diagonal, 2 = topo, 3 = esquerda
 	for x in range(1,tam__s2+1,1):
 		tmp = []
 		for y in range(1,tam__s1+1,1):
@@ -41,19 +42,15 @@ def smithWaterman(s1,s2):
 			#max
 			t = [0, values[0], values[1], values[2]]
 			matriz[x][y] = max(t)
-			tmp.append(t)
-			if(matriz[x][y] >= best):
-				best = matriz[x][y]
-				l__Max = x-1
-				c__Max = y-1
+			tmp.append(t.index(max(t)))
 		backtrack.append(tmp[:])
+
 	new__s1 = ""
 	new__s2 = ""
-	x = l__Max
-	y = c__Max
+	x = len(s2)-1
+	y = len(s1)-1
 	while (x >= 0 and y >= 0):
-		t = backtrack[x][y]
-		idx = t.index(max(backtrack[x][y]))
+		idx = backtrack[x][y]
 		#print(idx)
 		print("x: "+str(x))
 		print("y: "+str(y))
@@ -75,6 +72,14 @@ def smithWaterman(s1,s2):
 			y = y-1
 		else:
 			break	
+
+	for i in range(x+1,0,-1):
+		new__s1 += "_"
+		new__s2 += s2[i]
+	for i in range(y+1,0,-1):
+		new__s2 += "_"
+		new__s1 += s1[i]	
+
 	print(new__s1[::-1])
 	print(new__s2[::-1])
 	#write in file
@@ -82,6 +87,7 @@ def smithWaterman(s1,s2):
 	f.write(new__s1[::-1])
 	f.write("\n")
 	f.write(new__s2[::-1])
+	
 def read_file(name):
 	try:
 	    with open(name, "r") as file:
