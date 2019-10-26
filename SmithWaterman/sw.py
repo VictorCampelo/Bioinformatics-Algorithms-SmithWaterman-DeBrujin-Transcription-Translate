@@ -18,12 +18,13 @@ def smithWaterman(s1,s2):
 			tmp.append(0)
 		matriz.append(tmp[:])
 
+	score = 0	
 	backtrack = []
 	l__Max = 0
 	c__Max = 0
-	match = 2
-	misMatch = -1
-	gap = -1
+	gap = input("Digite o valor do GAP: ")
+	misMatch = input("Digite o Valor do MISMATCH: ")	
+	match = input("Digite o valor do MATCH")
 	best = 0
 	#1 = diagonal, 2 = topo, 3 = esquerda
 	for x in range(1,tam__s2+1,1):
@@ -104,19 +105,29 @@ def read_file(name):
 	#print("\n")
 	return seq
 
+def read_fasta(arquivo):
+    seq1 = ''
+    seq2 = ''
+    aux = []
+    w_seq = 0
+    with open(arquivo, 'r') as fasta:
+        for line in fasta:
+			if line.startswith('>'):
+				w_seq += 1
+				continue
+			if w_seq == 1:
+				seq1 += line
+			elif w_seq == 2:
+				seq2 += line
+	seq1 = seq1.replace("\n", "")  
+	seq1 = seq1.replace("\r", "")
+	seq1 = seq1.replace(".", "")
+	seq2 = seq2.replace("\n", "")  
+	seq2 = seq2.replace("\r", "")
+	seq2 = seq2.replace(".", "")
+	return seq1, seq2
+
 def main():
-	seq = ["",""]
-	for x in range(0,2,1):
-		if sys.version_info.major == 2:
-			name = raw_input("Digite o nome do arquivo com a sua extenção (.txt): ")
-		elif sys.version_info.major == 3:
-			name = input("Digite o nome do arquivo com a sua extenção (.txt): ")
-		seq[x] = read_file(name)	
-		while seq[x] == "":
-			if sys.version_info.major == 2:
-				name = raw_input("Digite o nome do arquivo com a sua extenção (.txt): ")
-			elif sys.version_info.major == 3:
-				name = input("Digite o nome do arquivo com a sua extenção (.txt): ")
-			seq[x] = read_file(name)
-	smithWaterman(seq[0], seq[1])
+	s1, s2 = read_fasta("input.fasta")
+	smithWaterman(s1, s2)
 main()
