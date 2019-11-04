@@ -10,19 +10,16 @@ def smithWaterman(s1,s2):
 	gap = input("Digite o valor do GAP: ")
 	misMatch = input("Digite o Valor do MISMATCH: ")	
 	match = input("Digite o valor do MATCH")
-	print(tam__s1)
-	print(tam__s2)
-
-	cols, rows = len(s1), len(s2)
-
+	tam__s1 = len(s1)
+	tam__s2 = len(s2)
 	#create matrix
-	matriz = [[0 for x in range(cols+1)] for x in range(rows+1)]
-	#first position gets 0
+	matriz = [[0 for x in range(tam__s1+1)] for x in range(tam__s2+1)]
+	#first position in matrix gets 0
 	matriz[0][0] = 0
 	#fills the first row and colune
-	for i in range(1, cols+1):
+	for i in range(1, tam__s1+1):
 		matriz[0][i] = matriz[0][i-1] + gap
-	for i in range(1, rows+1):
+	for i in range(1, tam__s2+1):
 		matriz[i][0] = matriz[i-1][0] + gap
 
 	#0 = diagonal, 1 = top, 2 = letf
