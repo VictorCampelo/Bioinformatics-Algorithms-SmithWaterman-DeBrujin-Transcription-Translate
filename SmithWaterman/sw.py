@@ -10,46 +10,34 @@ def smithWaterman(s1,s2):
 	gap = input("Digite o valor do GAP: ")
 	misMatch = input("Digite o Valor do MISMATCH: ")	
 	match = input("Digite o valor do MATCH")
-	best = 0
-	print(s1)
-	print(s2)
-	tam__s1 = len(s1)
-	tam__s2 = len(s2)
 	print(tam__s1)
 	print(tam__s2)
 
-	cols, rows = len(s1) + 1, len(s2) + 1
+	cols, rows = len(s1), len(s2)
 
-	# matriz = []
-	# for x in range(0,tam__s2+2,1):
-	# 	tmp = []
-	# 	for y in range(0,tam__s1+2,1):
-	# 		tmp.append(0)
-	# 	matriz.append(tmp[:])
-
-	matriz = [[0 for x in range(cols)] for x in range(rows)]
-
+	#create matrix
+	matriz = [[0 for x in range(cols+1)] for x in range(rows+1)]
+	#first position gets 0
 	matriz[0][0] = 0
-	for i in range(1, cols):
+	#fills the first row and colune
+	for i in range(1, cols+1):
 		matriz[0][i] = matriz[0][i-1] + gap
-	for i in range(1, rows):
+	for i in range(1, rows+1):
 		matriz[i][0] = matriz[i-1][0] + gap
 
-	#1 = diagonal, 2 = topo, 3 = esquerda
+	#0 = diagonal, 1 = top, 2 = letf
 	for x in range(1,tam__s2+1,1):
 		tmp = []
 		for y in range(1,tam__s1+1,1):
 			values = []
-			#diagonal
-			#print(s1[y-1])
-			#print(s2[x-1])
+			#diagonal value[0]
 			if (s1[y-1] == s2[x-1]):
 				values.append(matriz[x-1][y-1]+match)
 			else:
 				values.append(matriz[x-1][y-1]+misMatch)
-			#topo
+			#top value[1]
 			values.append(matriz[x-1][y]+gap)
-			#esqueda
+			#left value[2]
 			values.append(matriz[x][y-1]+gap)
 			#max
 			n = 0
@@ -63,56 +51,33 @@ def smithWaterman(s1,s2):
 			else:
 				n = matriz[x][y] = values[2]
 				t = 2		
-
-			#t = [values[0], values[1], values[2]]
-			#print("Lista: "+str(values))
-			#print("max: "+str(t))
 			score = n
 			tmp.append(t)
 		backtrack.append(tmp[:])
 
-	print(backtrack)	
-	print("\n")
-	print(matriz)	
-
+	#BACKTRACK
 	new__s1 = ""
 	new__s2 = ""
 	x = len(s2)-1
 	y = len(s1)-1
-	print(x)		
-	print(y)	
 	while (x >= 0 and y >= 0):
 		idx = backtrack[x][y]
-		#print(idx)
-		print("x: "+str(x))
-		print("y: "+str(y))
-		#seta diagonal s1 = s2
+		#add diagonal s1 = s2
 		if(idx == 0):
 			new__s1 += s1[y]
 			new__s2 += s2[x]
-			# print(new__s1)
-			# print(new__s2)
 			x = x-1
 			y = y-1
-		#seta topo
+		#add top
 		elif(idx == 1):
 			new__s1 += "_"
 			new__s2 += s2[x]
-			# print(new__s1)
-			# print(new__s2)
 			x = x-1
-		#seta esquerda
+		#add left
 		elif(idx == 2):
 			new__s1 += s1[y]
 			new__s2 += "_"
-			# print(new__s1)
-			# print(new__s2)
 			y = y-1
-		print(new__s1)
-		print(new__s2)	
-
-	print(x)		
-	print(y)
 
 	if y == -1:	
 		for i in range(x,-1,-1):
@@ -122,35 +87,12 @@ def smithWaterman(s1,s2):
 		for i in range(y,-1,-1):
 			new__s2 += "_"
 			new__s1 += s1[i]		
-	# if x > y: #s2 > s1
-	# 	print("aqui")
-	# 	dif = x - y
-	# 	print(x)
-	# 	print(y)
-	# 	for i in range(x,-1,-1):
-	# 		if s2[i] == s1[i-dif]:
-	# 			new__s2 += s2[i]
-	# 			new__s1 += s1[i-dif]
-	# 			continue
-	# 		new__s1 += "_"
-	# 		new__s2 += s2[i]
-	# else:		
-	# 	print("aqui 2")
-	# 	dif = y - x
-	# 	print(x)
-	# 	print(y)
-	# 	for i in range(y,-1,-1):
-	# 		if s2[i-dif] == s1[i]:
-	# 			new__s2 += s2[i-dif]
-	# 			new__s1 += s1[i]
-	# 			continue
-	# 		new__s2 += "_"
-	# 		new__s1 += s1[i]	
 
+	#printing results
 	print(new__s1[::-1])
 	print(new__s2[::-1])
 	print("Score: "+str(score))
-	#write in file
+	#write results in file
 	f= open("out_sw.txt","w+")
 	f.write(new__s1[::-1])
 	f.write("\n")
