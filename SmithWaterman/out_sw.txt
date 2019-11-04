@@ -1,2 +1,3 @@
-T____TATT
-_TGGTTA_T
+ATGGGG__GGC
+__GGGGCACCC
+Score: -10
