@@ -14,8 +14,9 @@ class Fasta_r:
 				for line in fasta:
 					#print(line)
 					if i == 0:
-						line = line.replace("()", "")
-						vet = line.split(",", -1)
+						line = line.replace("(", "")
+						line = line.replace(")", "")
+						vet = line.split(",")
 						self.k, self.d = vet[0], vet[1]
 						i+=1
 						continue
