@@ -65,6 +65,7 @@ def deBrujin(data, k, d):
 	n = 0
 	i = 0
 	print(sort_list)
+	#sort sequences
 	while (len(matrix_splited) >= n):
 		vet = []
 		vet = sort_list[n]
@@ -79,41 +80,49 @@ def deBrujin(data, k, d):
 				break
 		n+=1
 	print(final)
+	#add last no in the sort_list
 	sort_list.append(final[0])
-	seq_list = []		
+	vertex_list = []
+	#create all vertex over sorted list		
 	for tup in sort_list:
 		aux = []
 		aux.append(tup[0][0])
 		aux.append(tup[1][0])
+		print("aux")
 		print(aux)
-		seq_list.append(aux)
+		vertex_list.append(aux)
 	aux = []	
 	aux.append(sort_list[-1][0][1])
 	aux.append(sort_list[-1][1][1])
-	seq_list.append(aux)
-	print("aquiiii")
-	mount_list = []
+	vertex_list.append(aux)
+
+	edge_list = []
 	i = 0
-	for seq in seq_list:
-		print(seq)
-		if i+1 == len(seq_list):
+	#create all edges: v1(abcd) + v2(bcde) = e(abcde)
+	for seq in vertex_list:
+		print("edge")
+		if i+1 == len(vertex_list):
 			break
 		aux = []
-		obj = seq_list[i+1]
+		obj = vertex_list[i+1]
 		aux.append(seq[0][0]+obj[0][0][-1])
 		aux.append(seq[1][0]+obj[1][0][-1])
-		mount_list.append(aux)	
+		print(aux)
+		edge_list.append(aux)	
 		i+=1
-
 	result = ""
-	for seq in mount_list:
+	#takes all first character from first edge sequence 
+	for seq in edge_list:
 		result += seq[0][0]
-	result += mount_list[-1][0][1:]
+	#take the rest of first seguence from the last edge
+	result += edge_list[-1][0][1:]
+	#find the correspondent character over spaces(d) in the last edge sequence 
 	aux = ""
-	for i in range(len(mount_list)-1,len(mount_list)-int(d), -1):
-		aux += mount_list[i][1][0]
+	for i in range(len(edge_list)-2,(len(edge_list)-2)-int(d), -1):
+		aux += edge_list[i][1][0]
 	result += aux[::-1]
-	result += mount_list[-1][1]
+	#take all last sequence from the last edge
+	result += edge_list[-1][1]
 	print(result)		
 
 def main():
