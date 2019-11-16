@@ -123,7 +123,7 @@ def deBrujin(data, k, d):
 	result += aux[::-1]
 	#take all last sequence from the last edge
 	result += edge_list[-1][1]
-	print(result)		
+	return result		
 
 def main():
 	s1 = ""
@@ -141,6 +141,7 @@ def main():
 		elif sys.version_info.major == 3:
 			fasta = input("Digite o nome do arquivo (inclua .fasta): ")
 
-	deBrujin(fst.getData(), fst.getK(), fst.getD())		
+	with open('out.txt', 'w+') as file_w:
+		file_w.write(deBrujin(fst.getData(), fst.getK(), fst.getD()))	
 
 main()
