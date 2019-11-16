@@ -78,7 +78,7 @@ def deBrujin(data, k, d):
 				sort_list.append(tup)
 				break
 		n+=1
-
+	print(final)
 	sort_list.append(final[0])
 	seq_list = []		
 	for tup in sort_list:
@@ -91,11 +91,12 @@ def deBrujin(data, k, d):
 	aux.append(sort_list[-1][0][1])
 	aux.append(sort_list[-1][1][1])
 	seq_list.append(aux)
-
+	print("aquiiii")
 	mount_list = []
 	i = 0
 	for seq in seq_list:
-		if i+1 == len(seq_list)-1:
+		print(seq)
+		if i+1 == len(seq_list):
 			break
 		aux = []
 		obj = seq_list[i+1]
@@ -104,9 +105,16 @@ def deBrujin(data, k, d):
 		mount_list.append(aux)	
 		i+=1
 
+	result = ""
 	for seq in mount_list:
-		print("seq2")
-		print(seq)
+		result += seq[0][0]
+	result += mount_list[-1][0][1:]
+	aux = ""
+	for i in range(len(mount_list)-1,len(mount_list)-int(d), -1):
+		aux += mount_list[i][1][0]
+	result += aux[::-1]
+	result += mount_list[-1][1]
+	print(result)		
 
 def main():
 	s1 = ""
