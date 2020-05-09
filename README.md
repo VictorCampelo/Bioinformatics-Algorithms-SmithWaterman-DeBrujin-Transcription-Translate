@@ -1,2 +1,2 @@
 # bioinformatics
-Answers of the exercises of bioinformatic
+Algorithms to solve bioinformatics problems.
