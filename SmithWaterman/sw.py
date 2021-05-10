@@ -7,9 +7,9 @@ def smithWaterman(s1,s2):
 	backtrack = []
 	l__Max = 0
 	c__Max = 0
-	gap = input("Digite o valor do GAP: ")
-	misMatch = input("Digite o Valor do MISMATCH: ")	
-	match = input("Digite o valor do MATCH")
+	gap = int(input("Digite o valor do GAP: "))
+	misMatch = int(input("Digite o Valor do MISMATCH: "))	
+	match = int(input("Digite o valor do MATCH: "))
 	tam__s1 = len(s1)
 	tam__s2 = len(s2)
 	#create matrix
